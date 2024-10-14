@@ -49,7 +49,12 @@ namespace WebApiForm.Controllers
         {
             if (id != sesion.IdSesion)
             {
-                return BadRequest();
+                return BadRequest("El ID en la URL no coincide con el ID en el cuerpo de la solicitud.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("El modelo de la sesión no es válido.");
             }
 
             _context.Entry(sesion).State = EntityState.Modified;
