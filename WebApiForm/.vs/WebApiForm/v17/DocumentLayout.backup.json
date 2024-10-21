@@ -3,28 +3,12 @@
   "WorkspaceRootPath": "D:\\Proyecto Pasantias\\Formulario OPRET\\WebApiForm\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{467CB038-D2D4-48F1-8AFE-A8020D023F24}|WebApiForm\\WebApiForm.csproj|d:\\proyecto pasantias\\formulario opret\\webapiform\\webapiform\\services\\dto (data transfer object)\\formulariodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{467CB038-D2D4-48F1-8AFE-A8020D023F24}|WebApiForm\\WebApiForm.csproj|solutionrelative:webapiform\\services\\dto (data transfer object)\\formulariodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{467CB038-D2D4-48F1-8AFE-A8020D023F24}|WebApiForm\\WebApiForm.csproj|d:\\proyecto pasantias\\formulario opret\\webapiform\\webapiform\\capa de servicio\\formularioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{467CB038-D2D4-48F1-8AFE-A8020D023F24}|WebApiForm\\WebApiForm.csproj|solutionrelative:webapiform\\capa de servicio\\formularioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{467CB038-D2D4-48F1-8AFE-A8020D023F24}|WebApiForm\\WebApiForm.csproj|d:\\proyecto pasantias\\formulario opret\\webapiform\\webapiform\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{467CB038-D2D4-48F1-8AFE-A8020D023F24}|WebApiForm\\WebApiForm.csproj|solutionrelative:webapiform\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{467CB038-D2D4-48F1-8AFE-A8020D023F24}|WebApiForm\\WebApiForm.csproj|d:\\proyecto pasantias\\formulario opret\\webapiform\\webapiform\\controllers\\formularioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{467CB038-D2D4-48F1-8AFE-A8020D023F24}|WebApiForm\\WebApiForm.csproj|solutionrelative:webapiform\\controllers\\formularioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{467CB038-D2D4-48F1-8AFE-A8020D023F24}|WebApiForm\\WebApiForm.csproj|d:\\proyecto pasantias\\formulario opret\\webapiform\\webapiform\\repository\\models\\encuestaorden.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{467CB038-D2D4-48F1-8AFE-A8020D023F24}|WebApiForm\\WebApiForm.csproj|solutionrelative:webapiform\\repository\\models\\encuestaorden.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{467CB038-D2D4-48F1-8AFE-A8020D023F24}|WebApiForm\\WebApiForm.csproj|d:\\proyecto pasantias\\formulario opret\\webapiform\\webapiform\\repository\\formencuestadbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{467CB038-D2D4-48F1-8AFE-A8020D023F24}|WebApiForm\\WebApiForm.csproj|solutionrelative:webapiform\\repository\\formencuestadbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{467CB038-D2D4-48F1-8AFE-A8020D023F24}|WebApiForm\\WebApiForm.csproj|d:\\proyecto pasantias\\formulario opret\\webapiform\\webapiform\\services\\modificado controller\\preguntascompletascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{467CB038-D2D4-48F1-8AFE-A8020D023F24}|WebApiForm\\WebApiForm.csproj|solutionrelative:webapiform\\services\\modificado controller\\preguntascompletascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,84 +18,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Proyecto Pasantias\\Formulario OPRET\\WebApiForm\\WebApiForm\\Program.cs",
-              "RelativeDocumentMoniker": "WebApiForm\\Program.cs",
-              "ToolTip": "D:\\Proyecto Pasantias\\Formulario OPRET\\WebApiForm\\WebApiForm\\Program.cs",
-              "RelativeToolTip": "WebApiForm\\Program.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAAAC0AAAAwAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "EncuestaOrden.cs",
+              "DocumentMoniker": "D:\\Proyecto Pasantias\\Formulario OPRET\\WebApiForm\\WebApiForm\\Repository\\Models\\EncuestaOrden.cs",
+              "RelativeDocumentMoniker": "WebApiForm\\Repository\\Models\\EncuestaOrden.cs",
+              "ToolTip": "D:\\Proyecto Pasantias\\Formulario OPRET\\WebApiForm\\WebApiForm\\Repository\\Models\\EncuestaOrden.cs",
+              "RelativeToolTip": "WebApiForm\\Repository\\Models\\EncuestaOrden.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T19:59:11.098Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "FormulariosController.cs",
-              "DocumentMoniker": "D:\\Proyecto Pasantias\\Formulario OPRET\\WebApiForm\\WebApiForm\\Controllers\\FormulariosController.cs",
-              "RelativeDocumentMoniker": "WebApiForm\\Controllers\\FormulariosController.cs",
-              "ToolTip": "D:\\Proyecto Pasantias\\Formulario OPRET\\WebApiForm\\WebApiForm\\Controllers\\FormulariosController.cs",
-              "RelativeToolTip": "WebApiForm\\Controllers\\FormulariosController.cs",
-              "ViewState": "AgIAAGMAAAAAAAAAAAAswHQAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T19:35:36.654Z",
+              "WhenOpened": "2024-10-16T02:40:09.362Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "FormularioService.cs",
-              "DocumentMoniker": "D:\\Proyecto Pasantias\\Formulario OPRET\\WebApiForm\\WebApiForm\\Capa de Servicio\\FormularioService.cs",
-              "RelativeDocumentMoniker": "WebApiForm\\Capa de Servicio\\FormularioService.cs",
-              "ToolTip": "D:\\Proyecto Pasantias\\Formulario OPRET\\WebApiForm\\WebApiForm\\Capa de Servicio\\FormularioService.cs",
-              "RelativeToolTip": "WebApiForm\\Capa de Servicio\\FormularioService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAABfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T19:29:21.31Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "FormularioDto.cs",
-              "DocumentMoniker": "D:\\Proyecto Pasantias\\Formulario OPRET\\WebApiForm\\WebApiForm\\Services\\DTO (Data Transfer Object)\\FormularioDto.cs",
-              "RelativeDocumentMoniker": "WebApiForm\\Services\\DTO (Data Transfer Object)\\FormularioDto.cs",
-              "ToolTip": "D:\\Proyecto Pasantias\\Formulario OPRET\\WebApiForm\\WebApiForm\\Services\\DTO (Data Transfer Object)\\FormularioDto.cs",
-              "RelativeToolTip": "WebApiForm\\Services\\DTO (Data Transfer Object)\\FormularioDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T18:25:16.939Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "PreguntasCompletasController.cs",
-              "DocumentMoniker": "D:\\Proyecto Pasantias\\Formulario OPRET\\WebApiForm\\WebApiForm\\Services\\modificado Controller\\PreguntasCompletasController.cs",
-              "RelativeDocumentMoniker": "WebApiForm\\Services\\modificado Controller\\PreguntasCompletasController.cs",
-              "ToolTip": "D:\\Proyecto Pasantias\\Formulario OPRET\\WebApiForm\\WebApiForm\\Services\\modificado Controller\\PreguntasCompletasController.cs",
-              "RelativeToolTip": "WebApiForm\\Services\\modificado Controller\\PreguntasCompletasController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T17:38:11.613Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
               "Title": "FormEncuestaDbContext.cs",
               "DocumentMoniker": "D:\\Proyecto Pasantias\\Formulario OPRET\\WebApiForm\\WebApiForm\\Repository\\FormEncuestaDbContext.cs",
               "RelativeDocumentMoniker": "WebApiForm\\Repository\\FormEncuestaDbContext.cs",
               "ToolTip": "D:\\Proyecto Pasantias\\Formulario OPRET\\WebApiForm\\WebApiForm\\Repository\\FormEncuestaDbContext.cs",
               "RelativeToolTip": "WebApiForm\\Repository\\FormEncuestaDbContext.cs",
-              "ViewState": "AgIAAHAAAAAAAAAAAAAqwIMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADcAAAAAAAAAAAAqwAYAAABPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T17:31:55.008Z",
+              "WhenOpened": "2024-10-16T02:37:37.614Z",
               "EditorCaption": ""
             }
           ]

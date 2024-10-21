@@ -129,7 +129,7 @@ public partial class FormEncuestaDbContext : DbContext
     }
 
     //adaptacion de stored procedure para insertar datos a la tabla
-
+    /*
     public async Task InsertarFormularioAsync(
         string idUsuarios,
         string cedula,
@@ -152,4 +152,5 @@ public partial class FormEncuestaDbContext : DbContext
 
         await Database.ExecuteSqlRawAsync("EXEC sp_InsertarFormulario @id_usuarios, @cedula, @fecha, @hora, @id_estacion, @id_linea, @orderNumber", parameters);
     }
+    */
 }
