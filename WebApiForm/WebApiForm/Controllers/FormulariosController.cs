@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebApiForm.Capa_de_Servicio;
 using WebApiForm.Repository;
 using WebApiForm.Repository.Models;
+using WebApiForm.Services.modelo_stored_procedured;
 
 namespace WebApiForm.Controllers
 {
@@ -15,10 +17,12 @@ namespace WebApiForm.Controllers
     public class FormulariosController : ControllerBase
     {
         private readonly FormEncuestaDbContext _context;
+        private readonly FormularioService _formularioService;
 
-        public FormulariosController(FormEncuestaDbContext context)
+        public FormulariosController(FormEncuestaDbContext context, FormularioService formularioService)
         {
             _context = context;
+            _formularioService = formularioService;
         }
 
         // GET: api/Formularios
@@ -103,6 +107,34 @@ namespace WebApiForm.Controllers
         private bool FormularioExists(int id)
         {
             return _context.Formularios.Any(e => e.IdentifacadorForm == id);
+        }
+
+        [HttpPost("Insertar")]
+        public async Task<IActionResult> postInsertarForm([FromBody] FormularioDto formulario)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _formularioService.InsertarFormularioAsync(
+                    formulario.IdUsuarios,
+                    formulario.Cedula,
+                    formulario.Fecha,
+                    formulario.Hora,
+                    formulario.IdEstacion,
+                    formulario.IdLinea,
+                    formulario.OrderNumber);
+
+                return Ok("Formulario insertado correctamente.");
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al insertar formulario: {ex.Message}");
+            }
         }
     }
 }
