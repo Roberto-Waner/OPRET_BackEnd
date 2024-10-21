@@ -1,114 +1,5 @@
 [
   {
-    "ContainingType": "WebApiForm.Controllers.EncuestaOrdensController",
-    "Method": "GetEncuestaOrdens",
-    "RelativePath": "api/EncuestaOrdens",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[WebApiForm.Repository.Models.EncuestaOrden, WebApiForm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "WebApiForm.Controllers.EncuestaOrdensController",
-    "Method": "PostEncuestaOrden",
-    "RelativePath": "api/EncuestaOrdens",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "encuestaOrden",
-        "Type": "WebApiForm.Repository.Models.EncuestaOrden",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "WebApiForm.Repository.Models.EncuestaOrden",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "WebApiForm.Controllers.EncuestaOrdensController",
-    "Method": "GetEncuestaOrden",
-    "RelativePath": "api/EncuestaOrdens/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "WebApiForm.Repository.Models.EncuestaOrden",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "WebApiForm.Controllers.EncuestaOrdensController",
-    "Method": "PutEncuestaOrden",
-    "RelativePath": "api/EncuestaOrdens/{id}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.String",
-        "IsRequired": true
-      },
-      {
-        "Name": "encuestaOrden",
-        "Type": "WebApiForm.Repository.Models.EncuestaOrden",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "WebApiForm.Controllers.EncuestaOrdensController",
-    "Method": "DeleteEncuestaOrden",
-    "RelativePath": "api/EncuestaOrdens/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "WebApiForm.Controllers.EstacionsController",
     "Method": "GetEstacions",
     "RelativePath": "api/Estacions",
@@ -212,6 +103,22 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApiForm.Controllers.EstacionsController",
+    "Method": "ObtenerEstacionesPorLinea",
+    "RelativePath": "api/Estacions/linea/{idLinea}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idLinea",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -327,22 +234,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WebApiForm.Controllers.FormulariosController",
-    "Method": "postInsertarForm",
-    "RelativePath": "api/Formularios/Insertar",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "formulario",
-        "Type": "WebApiForm.Services.modelo_stored_procedured.FormularioDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "WebApiForm.Controllers.LineasController",
     "Method": "GetLineas",
     "RelativePath": "api/Lineas",
@@ -452,7 +343,17 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WebApiForm.Services.LoginController",
+    "ContainingType": "WebApiForm.Controllers.LoginController",
+    "Method": "Logout",
+    "RelativePath": "api/Login/Logout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApiForm.Controllers.LoginController",
     "Method": "InicioSesion",
     "RelativePath": "api/Login/User",
     "HttpMethod": "POST",
@@ -577,9 +478,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WebApiForm.Services.PreguntasCompletasController",
+    "ContainingType": "WebApiForm.Controllers.PreguntasCompletasController",
     "Method": "ObtenerPreguntasCompleto",
-    "RelativePath": "api/PreguntasCompletas/obtenerPreguntasCompleto",
+    "RelativePath": "api/PreguntasCompletas/obtenerQuestion",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -704,6 +605,26 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApiForm.Controllers.RegistroUsuariosController",
+    "Method": "getObtenerEmpleados",
+    "RelativePath": "api/RegistroUsuarios/ObtenerEmpl",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[WebApiForm.Services.DTO__Data_Transfer_Object_.ObtenerEmpleados, WebApiForm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "WebApiForm.Controllers.RespuestasController",

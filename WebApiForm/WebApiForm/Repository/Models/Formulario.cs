@@ -46,7 +46,15 @@ public partial class Formulario
     [Unicode(false)]
     public string? IdLinea { get; set; }
 
+    [ForeignKey("IdEstacion")]
+    [InverseProperty("Formularios")]
+    public virtual Estacion? IdEstacionNavigation { get; set; }
+
+    [ForeignKey("IdLinea")]
+    [InverseProperty("Formularios")]
+    public virtual Linea? IdLineaNavigation { get; set; }
+
     [ForeignKey("IdUsuarios")]
     [InverseProperty("Formularios")]
-    public virtual RegistroUsuario? IdUsuariosNavigation { get; set; } = null!;
+    public virtual RegistroUsuario IdUsuariosNavigation { get; set; } = null!;
 }

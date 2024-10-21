@@ -11,7 +11,7 @@ public partial class Sesion
 {
     [Key]
     [Column("id_sesion")]
-    public int? IdSesion { get; set; }
+    public int IdSesion { get; set; }
 
     [Column("tipo_respuesta")]
     [StringLength(100)]
@@ -38,7 +38,7 @@ public partial class Sesion
 
     [ForeignKey("CodPregunta")]
     [InverseProperty("Sesions")]
-    public virtual Pregunta? CodPreguntaNavigation { get; set; } = null!;
+    public virtual Pregunta CodPreguntaNavigation { get; set; } = null!;
 
     [ForeignKey("CodSubPregunta")]
     [InverseProperty("Sesions")]

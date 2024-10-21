@@ -1,23 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebApiForm.Repository;
+using WebApiForm.Capa_de_Servicio;
+using WebApiForm.Services;
 
-namespace WebApiForm.Services
+namespace WebApiForm.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class PreguntasCompletasController : ControllerBase
     {
-        private readonly FormEncuestaDbContext _context;
+        private readonly PreguntaCompletaService _preguntaCompletaService;
 
-        public PreguntasCompletasController(FormEncuestaDbContext context)
+        public PreguntasCompletasController(PreguntaCompletaService preguntaCompletaService)
         {
-            _context = context;
+            _preguntaCompletaService = preguntaCompletaService;
         }
 
-        [HttpGet("obtenerPreguntasCompleto")]
+        [HttpGet("obtenerQuestion")]
         public async Task<ActionResult<IEnumerable<PreguntaCompleta>>> ObtenerPreguntasCompleto()
         {
-            var preguntasCompleto = await _context.GetPreguntasCompleto();
+            var preguntasCompleto = await _preguntaCompletaService.ObtenerPreguntasCompletoAsync();
             if (preguntasCompleto == null || preguntasCompleto.Count == 0)
             {
                 return NotFound("No se encontraron preguntas completas.");

@@ -13,8 +13,20 @@ public partial class Estacion
     [Column("id_estacion")]
     public int IdEstacion { get; set; }
 
-    [Column("estacion_metro")]
+    [Column("id_linea")]
+    [StringLength(20)]
+    [Unicode(false)]
+    public string IdLinea { get; set; } = null!;
+
+    [Column("nombre_estacion")]
     [StringLength(255)]
     [Unicode(false)]
-    public string? EstacionMetro { get; set; }
+    public string? NombreEstacion { get; set; }
+
+    [InverseProperty("IdEstacionNavigation")]
+    public virtual ICollection<Formulario> Formularios { get; set; } = new List<Formulario>();
+
+    [ForeignKey("IdLinea")]
+    [InverseProperty("Estacions")]
+    public virtual Linea IdLineaNavigation { get; set; } = null!;
 }

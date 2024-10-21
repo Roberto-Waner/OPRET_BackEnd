@@ -56,9 +56,6 @@ public partial class RegistroUsuario
     [Unicode(false)]
     public string? Rol { get; set; }
 
-    [Column("estado")]
-    public bool Estado { get; set; }
-
     [InverseProperty("IdUsuariosNavigation")]
     public virtual ICollection<Formulario> Formularios { get; set; } = new List<Formulario>();
 

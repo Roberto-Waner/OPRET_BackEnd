@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using WebApiForm.Repository.Models;
+using WebApiForm.Services.DTO__Data_Transfer_Object_;
 using WebApiForm.Services;
-using System.Threading.Tasks;
-using Microsoft.Data.SqlClient; // Asegúrate de incluir este espacio de nombres
 
 namespace WebApiForm.Repository;
 
@@ -18,8 +17,6 @@ public partial class FormEncuestaDbContext : DbContext
         : base(options)
     {
     }
-
-    public virtual DbSet<EncuestaOrden> EncuestaOrdens { get; set; }
 
     public virtual DbSet<Estacion> Estacions { get; set; }
 
@@ -39,26 +36,33 @@ public partial class FormEncuestaDbContext : DbContext
 
     public DbSet<PreguntaCompleta> PreguntaCompletas { get; set; }
 
+    public DbSet<EstacionPorLinea> EstacionPorLineas { get; set; }
+
+    public DbSet<ObtenerEmpleados> FiltrarUsuarios { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Name=DBConnection");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<EncuestaOrden>(entity =>
-        {
-            entity.HasKey(e => e.Year).HasName("PK__Encuesta__D4BD60559D101B9B");
-        });
-
         modelBuilder.Entity<Estacion>(entity =>
         {
-            entity.HasKey(e => e.IdEstacion).HasName("PK__Estacion__1F3B45EB77812F5C");
+            entity.HasKey(e => e.IdEstacion).HasName("PK__Estacion__1F3B45EBAEDC364A");
 
             entity.Property(e => e.IdEstacion).ValueGeneratedNever();
+
+            entity.HasOne(d => d.IdLineaNavigation).WithMany(p => p.Estacions)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_Estacion_linea");
         });
 
         modelBuilder.Entity<Formulario>(entity =>
         {
             entity.HasKey(e => e.IdentifacadorForm).HasName("PK__Formular__6CDA1CA2297646DD");
+
+            entity.HasOne(d => d.IdEstacionNavigation).WithMany(p => p.Formularios).HasConstraintName("fk_Formulario_Estacion");
+
+            entity.HasOne(d => d.IdLineaNavigation).WithMany(p => p.Formularios).HasConstraintName("fk_Formulario_Linea");
 
             entity.HasOne(d => d.IdUsuariosNavigation).WithMany(p => p.Formularios)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -67,7 +71,7 @@ public partial class FormEncuestaDbContext : DbContext
 
         modelBuilder.Entity<Linea>(entity =>
         {
-            entity.HasKey(e => e.IdLinea).HasName("PK__Linea__E346BA197EC0FCF2");
+            entity.HasKey(e => e.IdLinea).HasName("PK__Linea__E346BA1903503E96");
         });
 
         modelBuilder.Entity<Pregunta>(entity =>
@@ -80,8 +84,6 @@ public partial class FormEncuestaDbContext : DbContext
         modelBuilder.Entity<RegistroUsuario>(entity =>
         {
             entity.HasKey(e => e.IdUsuarios).HasName("PK__Registro__854B73B3E3501785");
-
-            entity.Property(e => e.Estado).HasDefaultValue(true);
         });
 
         modelBuilder.Entity<Respuesta>(entity =>
@@ -113,44 +115,28 @@ public partial class FormEncuestaDbContext : DbContext
             entity.HasKey(e => e.CodSubPregunta).HasName("PK__SubPregu__B4EDE11C216D97A1");
         });
 
-        /*Definir PreguntaCompleta como entidad sin clave, ya que el 
-        procedimiento almacenado de PreguntaCompleta no existe como tabla*/
         modelBuilder.Entity<PreguntaCompleta>().HasNoKey();
+        modelBuilder.Entity<EstacionPorLinea>().HasNoKey();
+        modelBuilder.Entity<ObtenerEmpleados>().HasNoKey();
 
+        base.OnModelCreating(modelBuilder);
         OnModelCreatingPartial(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-    // Método para ejecutar el procedimiento almacenado
     public async Task<List<PreguntaCompleta>> GetPreguntasCompleto()
     {
         return await this.PreguntaCompletas.FromSqlRaw("EXEC sp_ObtenerPreguntasCompleto").ToListAsync();
     }
 
-    //adaptacion de stored procedure para insertar datos a la tabla
-    /*
-    public async Task InsertarFormularioAsync(
-        string idUsuarios,
-        string cedula,
-        string? fecha,
-        string? hora,
-        int? idEstacion,
-        string? idLInea,
-        int orderNumber)
+    public async Task<List<EstacionPorLinea>> GetEstacionPorLineas(string idLinea)
     {
-        var parameters = new[]
-        {
-            new SqlParameter("@id_usuarios", idUsuarios),
-            new SqlParameter("@cedula", cedula),
-            new SqlParameter("@fecha", fecha ?? (object) DBNull.Value),
-            new SqlParameter("@hora", hora ?? (object) DBNull.Value),
-            new SqlParameter("@id_estacion", idEstacion ??(object) DBNull.Value),
-            new SqlParameter("@id_linea", idLInea ??(object) DBNull.Value),
-            new SqlParameter("@orderNumber", orderNumber)
-        };
-
-        await Database.ExecuteSqlRawAsync("EXEC sp_InsertarFormulario @id_usuarios, @cedula, @fecha, @hora, @id_estacion, @id_linea, @orderNumber", parameters);
+        return await this.EstacionPorLineas.FromSqlRaw("EXEC sp_ObternerEstacionesPorLinea @idLinea = {0}", idLinea).ToListAsync();
     }
-    */
+
+    public async Task<List<ObtenerEmpleados>> ObtenerEmpleadosAsync()
+    {
+        return await this.FiltrarUsuarios.FromSqlRaw("EXEC sp_ObtenerEmpleados").ToListAsync();
+    }
 }

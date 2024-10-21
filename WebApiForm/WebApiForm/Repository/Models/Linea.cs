@@ -15,8 +15,19 @@ public partial class Linea
     [Unicode(false)]
     public string IdLinea { get; set; } = null!;
 
-    [Column("linea_metro")]
+    [Column("tipo_linea")]
+    [StringLength(50)]
+    [Unicode(false)]
+    public string TipoLinea { get; set; } = null!;
+
+    [Column("nombre_linea")]
     [StringLength(255)]
     [Unicode(false)]
-    public string? LineaMetro { get; set; }
+    public string? NombreLinea { get; set; }
+
+    [InverseProperty("IdLineaNavigation")]
+    public virtual ICollection<Estacion> Estacions { get; set; } = new List<Estacion>();
+
+    [InverseProperty("IdLineaNavigation")]
+    public virtual ICollection<Formulario> Formularios { get; set; } = new List<Formulario>();
 }

@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebApiForm.Capa_de_Servicio;
 using WebApiForm.Repository;
 using WebApiForm.Repository.Models;
+using WebApiForm.Services.DTO__Data_Transfer_Object_;
 
 namespace WebApiForm.Controllers
 {
@@ -15,10 +17,12 @@ namespace WebApiForm.Controllers
     public class RegistroUsuariosController : ControllerBase
     {
         private readonly FormEncuestaDbContext _context;
+        private readonly EmpleadoService _empleadoService;
 
-        public RegistroUsuariosController(FormEncuestaDbContext context)
+        public RegistroUsuariosController(FormEncuestaDbContext context, EmpleadoService empleadoService)
         {
             _context = context;
+            _empleadoService = empleadoService;
         }
 
         // GET: api/RegistroUsuarios
@@ -117,6 +121,13 @@ namespace WebApiForm.Controllers
         private bool RegistroUsuarioExists(string id)
         {
             return _context.RegistroUsuarios.Any(e => e.IdUsuarios == id);
+        }
+
+        [HttpGet("ObtenerEmpl")]
+        public async Task<ActionResult<List<ObtenerEmpleados>>> getObtenerEmpleados()
+        {
+            var empleados = await _empleadoService._ObtenerEmpleadosAsync();
+            return Ok(empleados);
         }
     }
 }

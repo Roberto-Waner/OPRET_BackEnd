@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebApiForm.Capa_de_Servicio;
+using WebApiForm.Middleware;
 using WebApiForm.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,8 +43,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 
-// Registrar el servicio FormularioService
-builder.Services.AddScoped<FormularioService>();
+// Registrar el servicio en vace a stored procedure
+builder.Services.AddScoped<EstacionPorLineaService>();
+builder.Services.AddScoped<EmpleadoService>();
+builder.Services.AddScoped<PreguntaCompletaService>();
 
 var app = builder.Build();
 
@@ -61,6 +64,9 @@ app.UseCors("AllowAll");
 
 // Usa autenticación
 app.UseAuthentication();
+
+// Usa el middleware de lista negra de tokens
+app.UseTokenBlacklist(); // Asegúrate de que este llamado esté después de la autenticación
 
 // Usa la autorización
 app.UseAuthorization();

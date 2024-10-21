@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebApiForm.Capa_de_Servicio;
 using WebApiForm.Repository;
 using WebApiForm.Repository.Models;
 
@@ -15,10 +16,12 @@ namespace WebApiForm.Controllers
     public class EstacionsController : ControllerBase
     {
         private readonly FormEncuestaDbContext _context;
+        private readonly EstacionPorLineaService _estacionPorLineaService;
 
-        public EstacionsController(FormEncuestaDbContext context)
+        public EstacionsController(FormEncuestaDbContext context, EstacionPorLineaService estacionPorLineaService)
         {
             _context = context;
+            _estacionPorLineaService = estacionPorLineaService;
         }
 
         // GET: api/Estacions
@@ -117,6 +120,21 @@ namespace WebApiForm.Controllers
         private bool EstacionExists(int id)
         {
             return _context.Estacions.Any(e => e.IdEstacion == id);
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        [HttpGet("linea/{idLinea}")]
+        public async Task<IActionResult> ObtenerEstacionesPorLinea(string idLinea)
+        {
+            var estaciones = await _estacionPorLineaService.ObtenerEstacionesPorLineaAsync(idLinea);
+
+            if (estaciones == null || estaciones.Count == 0)
+            {
+                return NotFound(new { success = false, message = "No se encontraron estaciones para esta línea." });
+            }
+
+            return Ok(new { success = true, result = estaciones });
         }
     }
 }

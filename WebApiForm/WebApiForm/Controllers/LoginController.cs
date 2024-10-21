@@ -4,11 +4,12 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using WebApiForm.Middleware;
 using WebApiForm.Repository;
 using WebApiForm.Repository.Models;
 using WebApiForm.Services.Modelos_Tokens;
 
-namespace WebApiForm.Services
+namespace WebApiForm.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -79,6 +80,23 @@ namespace WebApiForm.Services
                 message = "!!!Inicio de sesion exitoso!!!",
                 result = tokenString,
             });
+        }
+
+        [HttpPost]
+        [Route("Logout")]
+        public IActionResult Logout()
+        {
+            var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+
+            if (string.IsNullOrEmpty(token))
+            {
+                return BadRequest(new { success = false, message = "Token is required" });
+            }
+
+            // Agregar el token a una lista negra (blacklist)
+            TokenBlacklist.Add(token);
+
+            return Ok(new { success = true, message = "Logged out successfully" });
         }
     }
 }
