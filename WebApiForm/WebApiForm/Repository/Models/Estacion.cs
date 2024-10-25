@@ -28,5 +28,5 @@ public partial class Estacion
 
     [ForeignKey("IdLinea")]
     [InverseProperty("Estacions")]
-    public virtual Linea IdLineaNavigation { get; set; } = null!;
+    public virtual Linea? IdLineaNavigation { get; set; } = null!;
 }
