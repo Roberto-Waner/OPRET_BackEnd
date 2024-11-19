@@ -15,7 +15,6 @@ namespace WebApiForm.Capa_de_Servicio
         public async Task<List<PreguntaCompleta>> ObtenerPreguntasCompletoAsync()
         {
             return await _context.GetPreguntasCompleto();
-
         }
     }
 }

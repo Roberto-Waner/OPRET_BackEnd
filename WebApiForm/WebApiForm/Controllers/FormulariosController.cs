@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebApiForm.Capa_de_Servicio;
+using WebApiForm.DTO__Data_Transfer_Object_;
 using WebApiForm.Repository;
 using WebApiForm.Repository.Models;
 
@@ -15,10 +17,12 @@ namespace WebApiForm.Controllers
     public class FormulariosController : ControllerBase
     {
         private readonly FormEncuestaDbContext _context;
+        private readonly FormularioServices _formularioServices;
 
-        public FormulariosController(FormEncuestaDbContext context)
+        public FormulariosController(FormEncuestaDbContext context, FormularioServices formularioServices)
         {
             _context = context;
+            _formularioServices = formularioServices;
         }
 
         // GET: api/Formularios
@@ -103,6 +107,43 @@ namespace WebApiForm.Controllers
         private bool FormularioExists(int id)
         {
             return _context.Formularios.Any(e => e.IdentifacadorForm == id);
+        }
+
+        [HttpGet("filtrarForm/{filtrarId}")]
+        public async Task<ActionResult<IEnumerable<FiltrarFormularios_Dto>>> getFiltrarFormulario(string filtrarId)
+        {
+            if (string.IsNullOrEmpty(filtrarId))
+            {
+                return BadRequest(new { message = "El parámetro de filtrado es requerido" });
+            }
+
+            try
+            {
+                var resultados = await _formularioServices.FiltrarFormularioAsyncServices(filtrarId);
+                if(resultados == null || !resultados.Any())
+                {
+                    return NotFound();
+                }
+                return Ok(resultados);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = "Error al filtrar el formulario", details = ex.Message });
+            }
+        }
+
+        [HttpGet("ObtenerForm")]
+        public async Task<ActionResult<List<ObtenerForm_Dto>>> getObtenerFormularios()
+        {
+            try
+            {
+                var form = await _formularioServices.ObtenerFormularioAsyncService();
+                return Ok(form);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = "Error al filtrar el formulario", details = ex.Message });
+            }
         }
     }
 }

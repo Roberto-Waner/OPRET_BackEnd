@@ -1,5 +1,15 @@
 [
   {
+    "ContainingType": "WebApiForm.Controllers.CheckController",
+    "Method": "Check",
+    "RelativePath": "api/Check",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "WebApiForm.Controllers.EstacionsController",
     "Method": "GetEstacions",
     "RelativePath": "api/Estacions",
@@ -232,6 +242,52 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApiForm.Controllers.FormulariosController",
+    "Method": "getFiltrarFormulario",
+    "RelativePath": "api/Formularios/filtrarForm/{filtrarId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filtrarId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[WebApiForm.DTO__Data_Transfer_Object_.FiltrarFormularios_Dto, WebApiForm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApiForm.Controllers.FormulariosController",
+    "Method": "getObtenerFormularios",
+    "RelativePath": "api/Formularios/ObtenerForm",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[WebApiForm.DTO__Data_Transfer_Object_.ObtenerForm_Dto, WebApiForm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "WebApiForm.Controllers.LineasController",
@@ -734,6 +790,58 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApiForm.Controllers.RespuestasController",
+    "Method": "postFiltrarRespuesta",
+    "RelativePath": "api/Respuestas/filtrar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filtrar",
+        "Type": "WebApiForm.DTO__Data_Transfer_Object_.FiltrarRespuestas_Dto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApiForm.Controllers.RespuestasController",
+    "Method": "postInsertarRespuesta",
+    "RelativePath": "api/Respuestas/insertar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "respuestas",
+        "Type": "System.Collections.Generic.List\u00601[[WebApiForm.DTO__Data_Transfer_Object_.Respuesta_Dto, WebApiForm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApiForm.Controllers.RespuestasController",
+    "Method": "getObtenerRespuestas",
+    "RelativePath": "api/Respuestas/ObtenerResp",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[WebApiForm.DTO__Data_Transfer_Object_.ObtenerRespuestas_Dto, WebApiForm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "WebApiForm.Controllers.SesionsController",

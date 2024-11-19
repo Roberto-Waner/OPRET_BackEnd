@@ -13,11 +13,6 @@ public partial class Formulario
     [Column("identifacador_form")]
     public int IdentifacadorForm { get; set; }
 
-    [Column("no_encuesta")]
-    [StringLength(100)]
-    [Unicode(false)]
-    public string NoEncuesta { get; set; } = null!;
-
     [Column("id_usuarios")]
     [StringLength(100)]
     [Unicode(false)]
@@ -56,5 +51,5 @@ public partial class Formulario
 
     [ForeignKey("IdUsuarios")]
     [InverseProperty("Formularios")]
-    public virtual RegistroUsuario IdUsuariosNavigation { get; set; } = null!;
+    public virtual RegistroUsuario? IdUsuariosNavigation { get; set; } = null!;
 }

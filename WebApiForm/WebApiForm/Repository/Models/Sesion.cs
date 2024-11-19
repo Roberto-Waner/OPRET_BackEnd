@@ -11,7 +11,7 @@ public partial class Sesion
 {
     [Key]
     [Column("id_sesion")]
-    public int? IdSesion { get; set; }
+    public int IdSesion { get; set; }
 
     [Column("tipo_respuesta")]
     [StringLength(100)]
@@ -43,4 +43,7 @@ public partial class Sesion
     [ForeignKey("CodSubPregunta")]
     [InverseProperty("Sesions")]
     public virtual SubPregunta? CodSubPreguntaNavigation { get; set; }
+
+    [InverseProperty("IdSesionNavigation")]
+    public virtual ICollection<Respuesta> Respuestas { get; set; } = new List<Respuesta>();
 }

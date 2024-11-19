@@ -20,20 +20,15 @@ public partial class Respuesta
     [Column("no_encuesta")]
     [StringLength(100)]
     [Unicode(false)]
-    public string NoEncuesta { get; set; } = null!;
+    public string? NoEncuesta { get; set; }
 
-    [Column("cod_pregunta")]
-    public int CodPregunta { get; set; }
+    [Column("id_sesion")]
+    public int IdSesion { get; set; }
 
     [Column("respuesta")]
     [StringLength(255)]
     [Unicode(false)]
     public string? Respuesta1 { get; set; }
-
-    [Column("valoracion")]
-    [StringLength(50)]
-    [Unicode(false)]
-    public string? Valoracion { get; set; }
 
     [Column("comentarios")]
     [Unicode(false)]
@@ -43,11 +38,11 @@ public partial class Respuesta
     [Unicode(false)]
     public string? Justificacion { get; set; }
 
-    [ForeignKey("CodPregunta")]
+    [ForeignKey("IdSesion")]
     [InverseProperty("Respuestas")]
-    public virtual Pregunta CodPreguntaNavigation { get; set; } = null!;
+    public virtual Sesion? IdSesionNavigation { get; set; } = null!;
 
     [ForeignKey("IdUsuarios")]
     [InverseProperty("Respuestas")]
-    public virtual RegistroUsuario IdUsuariosNavigation { get; set; } = null!;
+    public virtual RegistroUsuario? IdUsuariosNavigation { get; set; } = null!;
 }

@@ -83,10 +83,23 @@ namespace WebApiForm.Controllers
         [HttpPost]
         public async Task<ActionResult<Sesion>> PostSesion(Sesion sesion)
         {
-            _context.Sesions.Add(sesion);
-            await _context.SaveChangesAsync();
+            try
+            {
+                // Deshabilitar el seguimiento de cambios para permitir que el trigger maneje la clave primaria
+                _context.ChangeTracker.AutoDetectChangesEnabled = false;
 
-            return CreatedAtAction("GetSesion", new { id = sesion.IdSesion }, sesion);
+                _context.Sesions.Add(sesion);
+                await _context.SaveChangesAsync();
+
+                // Rehabilitar el seguimiento de cambios
+                _context.ChangeTracker.AutoDetectChangesEnabled = true;
+
+                return CreatedAtAction("GetSesion", new { id = sesion.IdSesion }, sesion);
+            }
+            catch (Exception ex) 
+            { 
+                return BadRequest(new { message = "Error al crear la Sesion", details = ex.Message }); 
+            }
         }
 
         // DELETE: api/Sesions/5

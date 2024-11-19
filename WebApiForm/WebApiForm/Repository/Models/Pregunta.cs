@@ -19,8 +19,5 @@ public partial class Pregunta
     public string? Pregunta1 { get; set; }
 
     [InverseProperty("CodPreguntaNavigation")]
-    public virtual ICollection<Respuesta> Respuestas { get; set; } = new List<Respuesta>();
-
-    [InverseProperty("CodPreguntaNavigation")]
     public virtual ICollection<Sesion> Sesions { get; set; } = new List<Sesion>();
 }

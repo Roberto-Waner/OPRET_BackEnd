@@ -239,7 +239,6 @@ D:\Proyecto Pasantias\Formulario OPRET\WebApiForm\WebApiForm\obj\Debug\net8.0\We
 D:\Proyecto Pasantias\Formulario OPRET\WebApiForm\WebApiForm\obj\Debug\net8.0\WebApiForm.MvcApplicationPartsAssemblyInfo.cs
 D:\Proyecto Pasantias\Formulario OPRET\WebApiForm\WebApiForm\obj\Debug\net8.0\WebApiForm.MvcApplicationPartsAssemblyInfo.cache
 D:\Proyecto Pasantias\Formulario OPRET\WebApiForm\WebApiForm\obj\Debug\net8.0\EFCorePluralizer.cs
-D:\Proyecto Pasantias\Formulario OPRET\WebApiForm\WebApiForm\obj\Debug\net8.0\WebApiForm.sourcelink.json
 D:\Proyecto Pasantias\Formulario OPRET\WebApiForm\WebApiForm\obj\Debug\net8.0\staticwebassets.build.json
 D:\Proyecto Pasantias\Formulario OPRET\WebApiForm\WebApiForm\obj\Debug\net8.0\staticwebassets.development.json
 D:\Proyecto Pasantias\Formulario OPRET\WebApiForm\WebApiForm\obj\Debug\net8.0\staticwebassets\msbuild.WebApiForm.Microsoft.AspNetCore.StaticWebAssets.props
