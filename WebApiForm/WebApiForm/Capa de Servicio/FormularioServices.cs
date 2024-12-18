@@ -19,10 +19,10 @@ namespace WebApiForm.Capa_de_Servicio
             return await _context.ObtenerFormularioAsync();
         }
 
-        public async Task<List<FiltrarFormularios_Dto>> FiltrarFormularioAsyncServices(string filtrar) //no esta en uso actualmente
-        {
-            var query = "EXEC sp_FiltrarFormulario @Filtro = {0}";
-            return await _context.filtrarFormulariosDtos.FromSqlRaw(query, filtrar).ToListAsync();
-        }
+        //public async Task<List<FiltrarFormularios_Dto>> FiltrarFormularioAsyncServices(string filtrar) //no esta en uso actualmente
+        //{
+        //    var query = "EXEC sp_FiltrarFormulario @Filtro = {0}";
+        //    return await _context.filtrarFormulariosDtos.FromSqlRaw(query, filtrar).ToListAsync();
+        //}
     }
 }

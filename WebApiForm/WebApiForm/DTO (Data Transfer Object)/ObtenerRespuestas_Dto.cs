@@ -3,7 +3,7 @@
     public class ObtenerRespuestas_Dto
     {
         public string? IdUsuarios {  get; set; }
-        public string? Cedula { get; set; }
+        //public string? Cedula { get; set; }
         public string? NombreApellido { get; set; }
         public string? Usuarios { get; set; }
         public string? NoEncuesta {  get; set; }

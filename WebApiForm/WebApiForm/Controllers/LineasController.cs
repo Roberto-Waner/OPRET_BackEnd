@@ -102,16 +102,32 @@ namespace WebApiForm.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLinea(string id)
         {
-            var linea = await _context.Lineas.FindAsync(id);
-            if (linea == null)
+            try
             {
-                return NotFound();
+                var linea = await _context.Lineas.FindAsync(id);
+                if (linea == null)
+                {
+                    return NotFound(new { message = "La línea no fue encontrada." });
+                }
+
+                _context.Lineas.Remove(linea);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
             }
+            catch (DbUpdateException dbEx)
+            {
+                if(dbEx.InnerException != null && dbEx.InnerException.Message.Contains("fk_Estacion_linea"))
+                {
+                    return BadRequest(new { message = "No se puede borrar esta línea del metro porque hay estaciones que esta utilizando esta linea, para porder borrar esta linea primero deberas de borrar las estaciones que estan vinculados con esta." });
+                }
 
-            _context.Lineas.Remove(linea);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+                return BadRequest(new { message = "Ocurrió un error en la base de datos", details = dbEx.InnerException?.Message ?? dbEx.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Ocurrió un error inesperado", details = ex.Message });
+            }
         }
 
         private bool LineaExists(string id)

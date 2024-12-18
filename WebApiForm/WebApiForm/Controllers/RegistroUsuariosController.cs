@@ -4,8 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Operations;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Plugins;
 using WebApiForm.Capa_de_Servicio;
+using WebApiForm.Capa_de_Servicio.Encrypt;
 using WebApiForm.Repository;
 using WebApiForm.Repository.Models;
 using WebApiForm.Services.DTO__Data_Transfer_Object_;
@@ -17,12 +21,12 @@ namespace WebApiForm.Controllers
     public class RegistroUsuariosController : ControllerBase
     {
         private readonly FormEncuestaDbContext _context;
-        private readonly EmpleadoService _empleadoService;
+        //private readonly EmpleadoService _empleadoService;
 
-        public RegistroUsuariosController(FormEncuestaDbContext context, EmpleadoService empleadoService)
+        public RegistroUsuariosController(FormEncuestaDbContext context/*, EmpleadoService empleadoService*/)
         {
             _context = context;
-            _empleadoService = empleadoService;
+            //_empleadoService = empleadoService;
         }
 
         // GET: api/RegistroUsuarios
@@ -56,7 +60,42 @@ namespace WebApiForm.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(registroUsuario).State = EntityState.Modified;
+            // Recuperar el usuario actual desde la base de datos
+            //var existingUser = await _context.RegistroUsuarios.FindAsync(id);
+            var existingUser = await _context.RegistroUsuarios.AsNoTracking().FirstOrDefaultAsync(x => x.IdUsuarios == id);
+            if (existingUser == null)
+            {
+                return NotFound();
+            }
+
+            // Si se está intentando cambiar la contraseña
+            if (!string.IsNullOrWhiteSpace(registroUsuario.Passwords))
+            {
+                // Generar un nuevo salt y hash para la nueva contraseña
+                string newSalt = SaltHelper.GenerateSalt(32);
+                string newHashedPassword = HashHelper.Hash(registroUsuario.Passwords, newSalt);
+
+                // Actualizar la contraseña en el registro del usuario
+                existingUser.Passwords = $"{newSalt}:{newHashedPassword}";
+            }
+
+            // Actualizar otros campos
+            existingUser.NombreApellido = registroUsuario.NombreApellido;
+            existingUser.Usuario = registroUsuario.Usuario;
+            existingUser.Email = registroUsuario.Email;
+
+            //var updatedUser = new RegistroUsuario
+            //{
+            //    IdUsuarios = existingUser.IdUsuarios,
+            //    NombreApellido = registroUsuario.NombreApellido,
+            //    Usuario = registroUsuario.Usuario,
+            //    Email = registroUsuario.Email,
+            //    Passwords = string.IsNullOrWhiteSpace(registroUsuario.Passwords)
+            //        ? existingUser.Passwords
+            //        : $"{SaltHelper.GenerateSalt(32)}:{HashHelper.Hash(registroUsuario.Passwords, SaltHelper.GenerateSalt(32))}"
+            //};
+
+            _context.Entry(existingUser).State = EntityState.Modified;
 
             try
             {
@@ -82,40 +121,107 @@ namespace WebApiForm.Controllers
         [HttpPost]
         public async Task<ActionResult<RegistroUsuario>> PostRegistroUsuario(RegistroUsuario registroUsuario)
         {
-            _context.RegistroUsuarios.Add(registroUsuario);
+            // Generar un salt usando la clase SaltHelper
+            string salt = SaltHelper.GenerateSalt(32);
+
+            // Hashear la contraseña con el salt
+            string hashedPassword = HashHelper.Hash(registroUsuario.Passwords, salt);
+
+            // Almacenar el hash (que incluye el salt) en el campo de la contraseña
+            registroUsuario.Passwords = $"{salt}:{hashedPassword}";
+
+            //esto se hace cuando la tabla en la cual se le quiera adaptar un trigger tenga un id de tipo varchar/String
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (RegistroUsuarioExists(registroUsuario.IdUsuarios))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                // Asignar un valor temporal a IdUsuarios
+                registroUsuario.IdUsuarios = "TEMP_" + Guid.NewGuid().ToString();
 
-            return CreatedAtAction("GetRegistroUsuario", new { id = registroUsuario.IdUsuarios }, registroUsuario);
+                // Deshabilitar el seguimiento de cambios para permitir que el trigger maneje la clave primaria
+                _context.ChangeTracker.AutoDetectChangesEnabled = false;
+
+                _context.RegistroUsuarios.Add(registroUsuario);
+                await _context.SaveChangesAsync();
+
+                // Rehabilitar el seguimiento de cambios
+                _context.ChangeTracker.AutoDetectChangesEnabled = true;
+
+                // Recuperar el valor generado por el trigger
+                var generatedIdUsuario = await _context.RegistroUsuarios
+                    .Where(r => r.Usuario == registroUsuario.Usuario)
+                    .Select(r => r.IdUsuarios)
+                    .FirstOrDefaultAsync();
+
+                // Actualizar el objeto con el valor generado por el trigger
+                registroUsuario.IdUsuarios = generatedIdUsuario;
+
+                return CreatedAtAction("GetRegistroUsuario", new { id = registroUsuario.IdUsuarios }, registroUsuario);
+            }
+            catch (DbUpdateException Db_ex)
+            {
+                // Capturar errores de restricciones UNIQUE
+                if (Db_ex.InnerException != null && Db_ex.InnerException.Message.Contains("UNIQUE KEY constraint"))
+                {
+                    // Extraer información del mensaje del error
+                    string details = Db_ex.InnerException.Message;
+
+                    if (details.Contains("UQ__Registro__415B7BE502A28CF1")) //para la cedula
+                    {
+                        return BadRequest(new { message = "La cédula ya esta en uso." });
+                    }
+                    else if (details.Contains("UQ__Registro__9AFF8FC6E637B81B")) //para el usuario
+                    {
+                        return BadRequest(new { message = "El nombre del Usuario que haz ingresado, no se puede usar porque ya esta en uso." });
+                    }
+                    else if (details.Contains("UQ__Registro__AB6E61647DF25020")) //para el correo
+                    {
+                        return BadRequest(new { message = "El correo electrónico ya esta en uso." });
+                    }
+
+                    return BadRequest(new { message = "Valor único!!!, ya está registrado exitozamente.", details });
+                }
+
+                // Capturar otros errores de base de datos
+                return BadRequest(new { message = "Ocurrio un error al registrar el usuario", details = Db_ex.InnerException?.Message ?? Db_ex.Message });
+            }
+            catch (Exception ex)
+            {
+                //var innerException = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+
+                // Capturar errores generales
+                return StatusCode(500, new { message = "Ocurrió un error inesperado", details = ex.Message });
+            }
         }
 
         // DELETE: api/RegistroUsuarios/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRegistroUsuario(string id)
         {
-            var registroUsuario = await _context.RegistroUsuarios.FindAsync(id);
-            if (registroUsuario == null)
+            try
             {
-                return NotFound();
+                var registroUsuario = await _context.RegistroUsuarios.FindAsync(id);
+                if (registroUsuario == null)
+                {
+                    return NotFound();
+                }
+
+                _context.RegistroUsuarios.Remove(registroUsuario);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
             }
+            catch (DbUpdateException dbEx)
+            {
+                if(dbEx.InnerException != null && dbEx.InnerException.Message.Contains("fk_User_Form"))
+                {
+                    return BadRequest(new { message = "No se puede eliminar a este usuario debido a que se están utilizando sus datos en otra tabla." });
+                }
 
-            _context.RegistroUsuarios.Remove(registroUsuario);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+                return BadRequest(new { message = "Ocurrió un error en la base de datos", details = dbEx.InnerException?.Message ?? dbEx.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Ocurrió un error inesperado", details = ex.Message });
+            }
         }
 
         private bool RegistroUsuarioExists(string id)
@@ -123,11 +229,11 @@ namespace WebApiForm.Controllers
             return _context.RegistroUsuarios.Any(e => e.IdUsuarios == id);
         }
 
-        [HttpGet("ObtenerEmpl")]
-        public async Task<ActionResult<List<ObtenerEmpleados>>> getObtenerEmpleados()
-        {
-            var empleados = await _empleadoService._ObtenerEmpleadosAsync();
-            return Ok(empleados);
-        }
+        //[HttpGet("ObtenerEmpl")]
+        //public async Task<ActionResult<List<ObtenerEmpleados>>> getObtenerEmpleados()
+        //{
+        //    var empleados = await _empleadoService._ObtenerEmpleadosAsync();
+        //    return Ok(empleados);
+        //}
     }
 }

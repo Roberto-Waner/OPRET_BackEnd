@@ -18,11 +18,6 @@ public partial class Formulario
     [Unicode(false)]
     public string IdUsuarios { get; set; } = null!;
 
-    [Column("cedula")]
-    [StringLength(100)]
-    [Unicode(false)]
-    public string Cedula { get; set; } = null!;
-
     [Column("fecha")]
     [StringLength(100)]
     [Unicode(false)]

@@ -150,19 +150,19 @@ namespace WebApiForm.Controllers
             return Ok();
         }
 
-        [HttpGet("filtrar")]
-        public async Task<IActionResult> postFiltrarRespuesta([FromBody] FiltrarRespuestas_Dto filtrar)
-        {
-            try
-            {
-                var filtrarRespuestas = await _respuestaService.FiltrarRespuestaAsyncServices(filtrar); 
-                return Ok(filtrarRespuestas);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = "Error al filtrar la respuesta", details = ex.Message });
-            }
-        }
+        //[HttpGet("filtrar")]
+        //public async Task<IActionResult> postFiltrarRespuesta([FromBody] FiltrarRespuestas_Dto filtrar)
+        //{
+        //    try
+        //    {
+        //        var filtrarRespuestas = await _respuestaService.FiltrarRespuestaAsyncServices(filtrar); 
+        //        return Ok(filtrarRespuestas);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(new { message = "Error al filtrar la respuesta", details = ex.Message });
+        //    }
+        //}
 
         [HttpGet("ObtenerResp")]
         public async Task<ActionResult<List<ObtenerRespuestas_Dto>>> getObtenerRespuestas()

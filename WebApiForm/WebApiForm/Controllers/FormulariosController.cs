@@ -109,28 +109,28 @@ namespace WebApiForm.Controllers
             return _context.Formularios.Any(e => e.IdentifacadorForm == id);
         }
 
-        [HttpGet("filtrarForm/{filtrarId}")]
-        public async Task<ActionResult<IEnumerable<FiltrarFormularios_Dto>>> getFiltrarFormulario(string filtrarId)
-        {
-            if (string.IsNullOrEmpty(filtrarId))
-            {
-                return BadRequest(new { message = "El parámetro de filtrado es requerido" });
-            }
+        //[HttpGet("filtrarForm/{filtrarId}")]
+        //public async Task<ActionResult<IEnumerable<FiltrarFormularios_Dto>>> getFiltrarFormulario(string filtrarId)
+        //{
+        //    if (string.IsNullOrEmpty(filtrarId))
+        //    {
+        //        return BadRequest(new { message = "El parámetro de filtrado es requerido" });
+        //    }
 
-            try
-            {
-                var resultados = await _formularioServices.FiltrarFormularioAsyncServices(filtrarId);
-                if(resultados == null || !resultados.Any())
-                {
-                    return NotFound();
-                }
-                return Ok(resultados);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = "Error al filtrar el formulario", details = ex.Message });
-            }
-        }
+        //    try
+        //    {
+        //        var resultados = await _formularioServices.FiltrarFormularioAsyncServices(filtrarId);
+        //        if(resultados == null || !resultados.Any())
+        //        {
+        //            return NotFound();
+        //        }
+        //        return Ok(resultados);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(new { message = "Error al filtrar el formulario", details = ex.Message });
+        //    }
+        //}
 
         [HttpGet("ObtenerForm")]
         public async Task<ActionResult<List<ObtenerForm_Dto>>> getObtenerFormularios()

@@ -102,16 +102,32 @@ namespace WebApiForm.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSubPregunta(string id)
         {
-            var subPregunta = await _context.SubPreguntas.FindAsync(id);
-            if (subPregunta == null)
+            try
             {
-                return NotFound();
+                var subPregunta = await _context.SubPreguntas.FindAsync(id);
+                if (subPregunta == null)
+                {
+                    return NotFound();
+                }
+
+                _context.SubPreguntas.Remove(subPregunta);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
             }
+            catch (DbUpdateException dbEx)
+            {
+                if (dbEx.InnerException != null && dbEx.InnerException.Message.Contains("fk_Sesion_SubPreguntas"))
+                {
+                    return BadRequest(new { message = "Esta sub-pregunta esta siendo utilizado en la tabla Sesión. SI quieres eliminarlo deberas de borrarlo primero en la tabla de Sesión" });
+                }
 
-            _context.SubPreguntas.Remove(subPregunta);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+                return BadRequest(new { message = "Ocurrió un error en la base de datos", details = dbEx.InnerException?.Message ?? dbEx.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Ocurrió un error inesperado", details = ex.Message });
+            }
         }
 
         private bool SubPreguntaExists(string id)
